@@ -52,6 +52,8 @@ namespace UrlRepairTool.Parser
                 doc.OptionFixNestedTags = true;
 
                 if (doc.DocumentNode == null) return;
+
+                // look for the link anchors
                 var htmlNodes = doc.DocumentNode.SelectNodes("//a");
 
                 if (htmlNodes == null) return;
@@ -70,7 +72,6 @@ namespace UrlRepairTool.Parser
                     var newValue = (new UriAnalyzer()).AnalyzeUri(oldValue, file, out success);
 
                     if (!success) continue;
-
                     node.Attributes["href"].Value = newValue;
                
                     if(oldValue != newValue) _changedLog.PrintChangedFileMessage(oldValue, newValue, file);
